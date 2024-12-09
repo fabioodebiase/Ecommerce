@@ -4,7 +4,7 @@ public class Prodotto {
     private int idProdotto;
     private String nomeProdotto;
     private double prezzo;
-    private int quantitaProdotto;
+    private int quantitaDisponibile;
     private String imagePath;
     private int idUtente;
     private int idOrdine;
@@ -61,11 +61,11 @@ public class Prodotto {
         this.imagePath = imagePath;
     }
 
-    public int getQuantitaProdotto() {
-        return quantitaProdotto;
+    public int getQuantitaDisponibile() {
+        return quantitaDisponibile;
     }
 
-    public void setQuantitaProdotto(int quantitaProdotto) {
-        this.quantitaProdotto = quantitaProdotto;
+    public void setQuantitaDisponibile(int quantitaDisponibile) {
+        this.quantitaDisponibile = quantitaDisponibile;
     }
 }

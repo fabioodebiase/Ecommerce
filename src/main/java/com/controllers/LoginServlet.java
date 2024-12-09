@@ -32,7 +32,7 @@ public class LoginServlet extends HttpServlet {
             }
         } else {
             req.setAttribute("errore","Utente inesistente!");
-            req.getRequestDispatcher("Home").forward(req,resp);
+            req.getRequestDispatcher("home.jsp").forward(req,resp);
         }
     }
 }

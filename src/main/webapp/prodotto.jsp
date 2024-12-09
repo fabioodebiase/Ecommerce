@@ -15,14 +15,14 @@ Prodotto prodotto = (Prodotto) request.getAttribute("prodotto");
 %>
 <form action = "Ordine" method = "POST">
     <p><%=prodotto.getNomeProdotto()%></p>
-    <p>Prezzo:<%=prodotto.getPrezzo()%></p>
-    <p>Quantità disponibili:<%=prodotto.getQuantitaProdotto()%></p>
+    <p>Prezzo: <%=prodotto.getPrezzo()%></p>
+    <p>Quantita' disponibili: <%=prodotto.getQuantitaDisponibile()%></p>
     <img src="<%=request.getContextPath()%>/<%= prodotto.getImagePath()%>" width="200">
 
     <!--input hidden per passare parametri alla servlet degli ordini -->
     <input type = "hidden" name = "idUtente" value = "<%=user.getIdUtente()%>">
     <input type = "hidden" name = "idProdotto" value = "<%=prodotto.getIdProdotto()%>">
-    <input type="hidden" name="quantita" value="<%= prodotto.getQuantitaProdotto() %>">
+    <input type="hidden" name="quantita" value="<%= prodotto.getQuantitaDisponibile() %>">
 
     <input type = "submit" value = "Aggiungi agli ordini">
 </form>

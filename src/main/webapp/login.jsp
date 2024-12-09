@@ -1,5 +1,7 @@
 <html>
-<head>Login</head>
+<header>
+    <title>Login</title>
+</header>
 <body>
 <h1>Login</h1>
 

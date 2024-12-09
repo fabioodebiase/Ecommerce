@@ -23,7 +23,7 @@ public class InserisciProdottoServlet extends HttpServlet {
             // Recupero parametri dal form
             String nomeProdotto = req.getParameter("nomeProdotto");
             double prezzoProdotto = Double.parseDouble(req.getParameter("prezzoProdotto"));
-            int quantitaProdotto = Integer.parseInt(req.getParameter("quantitaProdotto"));
+            int quantitaProdotto = Integer.parseInt(req.getParameter("quantitaDisponibile"));
 
             // Validazione di base
             if (nomeProdotto == null || nomeProdotto.isEmpty() || prezzoProdotto <= 0 || quantitaProdotto < 0) {
@@ -63,7 +63,7 @@ public class InserisciProdottoServlet extends HttpServlet {
             Prodotto newProdotto = new Prodotto();
             newProdotto.setNomeProdotto(nomeProdotto);
             newProdotto.setPrezzo(prezzoProdotto);
-            newProdotto.setQuantitaProdotto(quantitaProdotto);
+            newProdotto.setQuantitaDisponibile(quantitaProdotto);
             newProdotto.setImagePath(filePath); // Percorso relativo
             ProdottoDAO.aggiungiProdotto(newProdotto);
 

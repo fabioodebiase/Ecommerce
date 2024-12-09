@@ -2,7 +2,6 @@ package com.DAO;
 
 import com.connection.ConnectionDB;
 import com.entities.Prodotto;
-import com.entities.Utente;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,13 +11,13 @@ public class ProdottoDAO {
     static ConnectionDB connessione = new ConnectionDB();
 
     public static void aggiungiProdotto(Prodotto prodotto ){
-        String sql = "INSERT INTO Prodotti (nome_prodotto, prezzo, quantita, image_path ) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO Prodotti (nome_prodotto, prezzo, quantita_disponibile, image_path ) VALUES (?,?,?,?)";
         try(Connection conn = connessione.connessioneDB()){
             if (conn != null){
                 PreparedStatement preparedStatement = conn.prepareStatement(sql);
                 preparedStatement.setString(1, prodotto.getNomeProdotto());
                 preparedStatement.setDouble(2, prodotto.getPrezzo());
-                preparedStatement.setInt(3, prodotto.getQuantitaProdotto());
+                preparedStatement.setInt(3, prodotto.getQuantitaDisponibile());
                 preparedStatement.setString(4, prodotto.getImagePath());
                 preparedStatement.executeUpdate();
             }
@@ -35,12 +34,11 @@ public class ProdottoDAO {
                 Statement statement = conn.createStatement();
                 ResultSet rs = statement.executeQuery(sql);
                 while(rs.next()){
-                    System.out.println("record trovati");
                     Prodotto prodotto = new Prodotto();
                     prodotto.setIdProdotto(rs.getInt("id"));
                     prodotto.setNomeProdotto(rs.getString("nome_prodotto"));
                     prodotto.setPrezzo(rs.getDouble("prezzo"));
-                    prodotto.setQuantitaProdotto(rs.getInt("quantita"));
+                    prodotto.setQuantitaDisponibile(rs.getInt("quantita_disponibile"));
                     prodotto.setImagePath(rs.getString("image_path"));
                     listaProdotti.add(prodotto);
                 }
@@ -64,7 +62,7 @@ public class ProdottoDAO {
                     prodotto.setIdProdotto(rs.getInt("id"));
                     prodotto.setNomeProdotto(rs.getString("nome_prodotto"));
                     prodotto.setPrezzo(rs.getDouble("prezzo"));
-                    prodotto.setQuantitaProdotto(rs.getInt("quantita"));
+                    prodotto.setQuantitaDisponibile(rs.getInt("quantita_disponibile"));
                     prodotto.setImagePath(rs.getString("image_path"));
                 }
             }

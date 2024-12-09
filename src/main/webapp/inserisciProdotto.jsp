@@ -11,12 +11,12 @@
     <input type = "text" name = "nomeProdotto" id = "nomeProdotto">
 
     <label for="prezzoProdotto"> Prezzo:</label>
-    <input type = "text" name = "prezzoProdotto" id = "prezzoProdotto">
+    <input type = "number" name = "prezzoProdotto" id = "prezzoProdotto">
 
-    <label for="quantitaProdotto"> Quantita':</label>
-    <input type = "text" name = "quantitaProdotto" id = "quantitaProdotto">
+    <label for="quantitaDisponibile"> Quantita':</label>
+    <input type = "number" name = "quantitaDisponibile" id = "quantitaDisponibile">
 
-    <input type="file" name="file" accept = "image/jpeg, image/png">
+    <input type="file" name="file" accept = "image/jpeg, image/png" required>
     <input type = "submit" value = "Inserisci Prodotto">
 
 </form>
