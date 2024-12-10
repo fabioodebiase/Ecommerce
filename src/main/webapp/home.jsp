@@ -34,6 +34,9 @@ List<Prodotto> listaProdotti = ProdottoDAO.getAllProdotti();
     %>
 
     <h1>Lista prodotti</h1>
+
+    <a href = "carrello.jsp"><button>Vai al carrello</button></a>
+    <a href = "Logout">Logout</a>
     <%
     if (listaProdotti != null && !listaProdotti.isEmpty()) {
     for (Prodotto prodotto : listaProdotti) {
