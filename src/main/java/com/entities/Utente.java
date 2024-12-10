@@ -16,7 +16,6 @@ public class Utente {
         this.password = password;
     }
 
-
     public int getIdUtente() {
         return idUtente;
     }

@@ -17,21 +17,20 @@ public class SignUpServlet extends HttpServlet {
 		String username = req.getParameter("username");
 		String email = req.getParameter("email");
 		String password = req.getParameter("password");
-
 		// Verifica se l'utente esiste
-		boolean existingUser = UtenteDAO.findUtente(username, email);
+		Utente existingUser = UtenteDAO.findUtente(username, email);
 
-		if (!existingUser) {
-			// Utente non esiste, registra
+		//verifica che l'email non sia già utilizzata
+		if (!existingUser.getEmail().equals(email)) {
+			// Se non è utilizzata fa la registrazione
 			Utente newUtente = new Utente(username, email, password);
 			UtenteDAO.registraUtente(newUtente.getUsername(), newUtente.getEmail(), newUtente.getPassword());
-
 			// Passa l'oggetto utente alla JSP
 			req.setAttribute("utente", newUtente);
 			req.getRequestDispatcher("confirmSignUp.jsp").forward(req, resp);
 		} else {
 			// Imposta l'attributo di errore e inoltra alla pagina di registrazione
-			req.setAttribute("errore", "Username o Email già registrati");
+			req.setAttribute("errore", "Email già registrata");
 			req.getRequestDispatcher("signUp.jsp").forward(req, resp);
 		}
 	}

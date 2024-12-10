@@ -6,14 +6,13 @@
 <h1>Login</h1>
 
 <form action = "Login" method = "POST">
-    <label for="usernameEmail"> Username/Email</label>
-    <input type = "text" name = "usernameEmail" id = "usernameEmail">
+    <label for="email"> Email</label>
+    <input type = "email" name = "email" id = "email">
 
     <label for="password"> Password</label>
     <input type = "password" name = "password" id = "password">
 
     <input type = "submit" value = "Accedi">
-
 </form>
 <%
 if (request.getAttribute("errore") != null) { %>
