@@ -67,12 +67,12 @@ public class InserisciProdottoServlet extends HttpServlet {
             newProdotto.setImagePath(filePath); // Percorso relativo
             ProdottoDAO.aggiungiProdotto(newProdotto);
 
-            req.getRequestDispatcher("confirmProdotto.jsp").forward(req, resp);
+            req.getRequestDispatcher("adminHome.jsp").forward(req, resp);
 
         } catch (Exception e) {
             e.printStackTrace();
             req.setAttribute("error", "Errore durante l'inserimento del prodotto.");
-            req.getRequestDispatcher("inserisciProdotto.jsp").forward(req, resp);
+            req.getRequestDispatcher("adminHome.jsp").forward(req, resp);
         }
     }
 }

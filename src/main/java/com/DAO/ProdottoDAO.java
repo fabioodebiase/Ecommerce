@@ -71,6 +71,54 @@ public class ProdottoDAO {
 		}
 		return prodotto;
 	}
+
+	public static void updateProdotto(Prodotto prodotto) {
+		String sql = "UPDATE Prodotti SET nome_prodotto = ?, prezzo = ?, quantita_disponibile = ?, image_path = ? WHERE id = ?";
+		try (Connection conn = connessione.connessioneDB()) {
+			if (conn != null) {
+				PreparedStatement preparedStatement = conn.prepareStatement(sql);
+				preparedStatement.setString(1, prodotto.getNomeProdotto());
+				preparedStatement.setDouble(2, prodotto.getPrezzo());
+				preparedStatement.setInt(3, prodotto.getQuantitaDisponibile());
+				preparedStatement.setString(4, prodotto.getImagePath());
+				preparedStatement.setInt(5, prodotto.getIdProdotto());
+				preparedStatement.executeUpdate();
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static String getFilePath(int id) {
+		String sql = "SELECT image_path FROM Prodotti WHERE id = ?";
+		String filePath = null;
+		try (Connection conn = connessione.connessioneDB()) {
+			if (conn != null) {
+				PreparedStatement preparedStatement = conn.prepareStatement(sql);
+				preparedStatement.setInt(1, id);
+				ResultSet rs = preparedStatement.executeQuery();
+				while (rs.next()) {
+					filePath = rs.getString("image_path");
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return filePath;
+	}
+
+	public static void deleteProdotto(int id) {
+		String sql = "DELETE FROM Prodotti WHERE id = ?";
+		try (Connection conn = connessione.connessioneDB()) {
+			if (conn != null) {
+				PreparedStatement preparedStatement = conn.prepareStatement(sql);
+				preparedStatement.setInt(1, id);
+				preparedStatement.executeUpdate();
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }
 
 

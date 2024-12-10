@@ -6,27 +6,9 @@ public class Prodotto {
 	private double prezzo;
 	private int quantitaDisponibile;
 	private String imagePath;
-	private int idUtente;
-	private int idOrdine;
 
 	public Prodotto() {
 
-	}
-
-	public int getIdUtente() {
-		return idUtente;
-	}
-
-	public void setIdUtente(int idUtente) {
-		this.idUtente = idUtente;
-	}
-
-	public int getIdOrdine() {
-		return idOrdine;
-	}
-
-	public void setIdOrdine(int idOrdine) {
-		this.idOrdine = idOrdine;
 	}
 
 	public int getIdProdotto() {
