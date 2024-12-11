@@ -9,16 +9,22 @@
 <body>
 <%
 Utente utente = (Utente) session.getAttribute("user");
+int totale = 0;
 List<Prodotto> carrello = (List<Prodotto>) session.getAttribute("carrello");
 
     if (carrello != null && !carrello.isEmpty()) {
+
     for (Prodotto prodotto : carrello) {
     %>
     <div>
-        <p><%= prodotto.getNomeProdotto() %></p>
+        <p>Prodotto:<%= prodotto.getNomeProdotto() %></p>
+        <p>Prezzo:<%= prodotto.getPrezzo() %></p>
         <img src="<%= request.getContextPath() %>/<%= prodotto.getImagePath() %>"
              alt="<%= prodotto.getNomeProdotto() %>" width="200">
+
     </div>
+
+
     <%
     }
     } else {
@@ -27,6 +33,11 @@ List<Prodotto> carrello = (List<Prodotto>) session.getAttribute("carrello");
     <%
     }
     %>
+    <p>Totale: <%=totale%></p>
+    <% if (utente.getUsername().equals("admin")){ %>
+    <a href="adminHome.jsp">Vai alla home</a>
+    <% } else { %>
     <a href="home.jsp">Vai alla home</a>
+    <% } %>
 </body>
 </html>
