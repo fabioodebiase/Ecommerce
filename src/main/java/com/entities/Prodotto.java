@@ -6,6 +6,7 @@ public class Prodotto {
 	private double prezzo;
 	private int quantitaDisponibile;
 	private String imagePath;
+	private int quantitaSel;
 
 	public Prodotto() {
 
@@ -49,5 +50,13 @@ public class Prodotto {
 
 	public void setQuantitaDisponibile(int quantitaDisponibile) {
 		this.quantitaDisponibile = quantitaDisponibile;
+	}
+
+	public int getQuantitaSel() {
+		return quantitaSel;
+	}
+
+	public void setQuantitaSel(int quantitaSel) {
+		this.quantitaSel = quantitaSel;
 	}
 }

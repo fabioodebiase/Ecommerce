@@ -22,11 +22,10 @@ public class CarrelloServlet extends HttpServlet {
         // Recupera il prodotto selezionato
         int idProdotto = Integer.parseInt(req.getParameter("idProdotto"));
         Prodotto prodottoCarrello = ProdottoDAO.getProdottoById(idProdotto);
-
+        int quantitaSel = Integer.parseInt(req.getParameter("quantitaProdotto"));
+        prodottoCarrello.setQuantitaSel(quantitaSel);
         // Recupera l'utente corrente dalla sessione
         HttpSession session = req.getSession();
-
-        // Recupera o crea un nuovo carrello
         List <Prodotto> carrello = (List<Prodotto>) session.getAttribute("carrello");
         if (carrello == null) {
             // Crea un nuovo carrello se non esiste o appartiene a un altro utente

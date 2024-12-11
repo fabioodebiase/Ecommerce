@@ -19,7 +19,7 @@ Prodotto prodotto = (Prodotto) request.getAttribute("prodotto");
     <p id = "quantitaDisp">Quantita' disponibili: <%=prodotto.getQuantitaDisponibile()%></p>
 
     <label for="quantitaProdotto"> Quantita':</label>
-    <input type = "number" name = "quantitaProdotto" id = "quantitaProdotto" min = "1">
+    <input type = "number" name = "quantitaProdotto" id = "quantitaProdotto" min = "1" required>
 
     <img src="<%=request.getContextPath()%>/<%= prodotto.getImagePath()%>" width="200">
     <p id="errorMsg" style="color: red; display: none;">Selezionare una quantita' valida!</p>
@@ -46,11 +46,11 @@ Prodotto prodotto = (Prodotto) request.getAttribute("prodotto");
         if (selectedValue > maxQuantita || selectedValue < 1 || isNaN(selectedValue)) {
             // Mostra il messaggio di errore
             errorMsg.style.display = "block";
-            submit.style.display = "none"
+            submit.disabled = true
         } else {
             // Nascondi il messaggio di errore
             errorMsg.style.display = "none";
-            submit.style.display = "block"
+            submit.disabled = false;
         }
     });
 </script>
