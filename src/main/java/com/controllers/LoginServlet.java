@@ -27,7 +27,7 @@ public class LoginServlet extends HttpServlet {
 			req.getRequestDispatcher("adminHome.jsp").forward(req, resp);
 		} else {
 			req.setAttribute("errore", "Credenziali errate!");
-			req.getRequestDispatcher("signUp.jsp").forward(req, resp);
+			req.getRequestDispatcher("login.jsp").forward(req, resp);
 		}
 	}
 }

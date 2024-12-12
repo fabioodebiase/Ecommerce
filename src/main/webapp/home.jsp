@@ -6,46 +6,47 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop</title>
+    <link rel="stylesheet" href="css/home.css">
 </head>
 <body>
 <%
 Utente user = (Utente) session.getAttribute("user");
+if (user == null || session == null || ("admin@gmail.com".equals(user.getEmail()) && "admin".equals(user.getPassword()))) {
+response.sendRedirect("login.jsp");
+return;
+}
 List<Prodotto> listaProdotti = ProdottoDAO.getAllProdotti();
-
-    if (user != null) {
-    String username = user.getUsername();
-    %>
-    <h1>Benvenuto, <%= username %></h1>
-    <%
-    } else {
-    %>
-    <h1>Utente non autenticato</h1>
-    <a href="login.jsp">Clicca qui per effettuare il login</a>
-    <%
-    }
     %>
 
-    <h1>Lista prodotti</h1>
-    <a href = "carrello.jsp"><button>Vai al carrello</button></a>
-    <a href = "Logout">Logout</a>
-    <%
-    if (listaProdotti != null && !listaProdotti.isEmpty()) {
-    for (Prodotto prodotto : listaProdotti) {
-    %>
-    <a href = "Prodotto?id=<%=prodotto.getIdProdotto()%>">
-        <div>
-            <p><%= prodotto.getNomeProdotto() %></p>
-            <img src="<%= request.getContextPath() %>/<%= prodotto.getImagePath() %>" width="200">
-        </div>
-    </a>
-    <%
-        }
-    } else {
-    %>
-    <p>Nessun prodotto disponibile al momento.</p>
-    <%
-    }
-    %>
+    <header class="user-header">
+        <h1 class="welcome-message">Benvenuto, <%= user.getUsername() %></h1>
+        <nav class="action-buttons">
+            <a href="ordini.jsp" class="btn">Ordini</a>
+            <a href="carrello.jsp" class="btn">Carrello</a>
+            <a href="Logout" class="btn">Logout</a>
+        </nav>
+    </header>
+
+    <main class="main-content">
+            <h2>Lista prodotti</h2>
+            <div class="product-list">
+                <% if (listaProdotti != null && !listaProdotti.isEmpty()) { %>
+                <% for (Prodotto prodotto : listaProdotti) { %>
+                <div class="product-item">
+                    <a href="Prodotto?id=<%= prodotto.getIdProdotto() %>" class="product-link">
+                        <img src="<%= request.getContextPath() %>/<%= prodotto.getImagePath() %>" alt="<%= prodotto.getNomeProdotto() %>" class="product-image">
+                        <p class="product-name"><%= prodotto.getNomeProdotto() %></p>
+                    </a>
+                </div>
+                <% } %>
+                <% } else { %>
+                <p class="no-products">Nessun prodotto disponibile al momento.</p>
+                <% } %>
+            </div>
+    </main>
+
 </body>
 </html>
