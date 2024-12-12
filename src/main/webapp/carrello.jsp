@@ -93,7 +93,7 @@ List<Prodotto> carrello = (List<Prodotto>) session.getAttribute("carrello");
         </div>
         <% } %>
         <% } else { %>
-        <p>Il carrello è vuoto.</p>
+        <p>Il carrello e' vuoto.</p>
         <% } %>
         <p>Totale: <span id="totale" name="totale"><%= totale %></span></p>
         <input type="hidden" name="totale" value="<%=totale%>">

@@ -16,6 +16,15 @@ import java.util.List;
 
 @WebServlet("/Carrello")
 public class CarrelloServlet extends HttpServlet {
+
+//    @Override
+//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        int idProdotto = Integer.parseInt(req.getParameter("idProdotto"));
+//        Prodotto prodotto = ProdottoDAO.getProdottoById(idProdotto);
+//        req.setAttribute("prodotto", prodotto);
+//
+//    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -33,10 +42,23 @@ public class CarrelloServlet extends HttpServlet {
             session.setAttribute("carrello", carrello);
         }
 
-        // Aggiungi il prodotto al carrello
-        carrello.add(prodottoCarrello);
+        // Controlla se il prodotto è già presente nel carrello
+        boolean prodottoEsistente = false;
+        for (Prodotto prodotto : carrello) {
+            if (prodotto.getIdProdotto() == idProdotto) {
+                // Aggiorna la quantità del prodotto esistente
+                prodotto.setQuantitaSel(prodotto.getQuantitaSel() + quantitaSel);
+                prodottoEsistente = true;
+                break;
+            }
+        }
+
+        if (!prodottoEsistente) {
+            // Aggiungi il prodotto al carrello
+            carrello.add(prodottoCarrello);
+        }
 
         // Reindirizza alla pagina del carrello
-        req.getRequestDispatcher("carrello.jsp").forward(req, resp);
+        resp.sendRedirect("carrello.jsp");
     }
 }
