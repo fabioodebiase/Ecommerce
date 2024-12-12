@@ -16,15 +16,6 @@ import java.util.List;
 
 @WebServlet("/Carrello")
 public class CarrelloServlet extends HttpServlet {
-
-//    @Override
-//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        int idProdotto = Integer.parseInt(req.getParameter("idProdotto"));
-//        Prodotto prodotto = ProdottoDAO.getProdottoById(idProdotto);
-//        req.setAttribute("prodotto", prodotto);
-//
-//    }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

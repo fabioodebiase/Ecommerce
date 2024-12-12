@@ -85,8 +85,9 @@ List<Prodotto> carrello = (List<Prodotto>) session.getAttribute("carrello");
                    min="1" max="<%= prodotto.getQuantitaDisponibile() %>" value="<%= prodotto.getQuantitaSel() %>" required>
             <button type="button" class="minus">-</button>
 
-            <input type="hidden" name="quantitaDisp" value="<%= prodotto.getQuantitaDisponibile() %>" class="quantitaMax">
 
+            <input type="hidden" name="quantitaDisp" value="<%= prodotto.getQuantitaDisponibile() %>" class="quantitaMax">
+            <input type="hidden" name="idProdotto" value="<%= prodotto.getIdProdotto() %>">
             <a href="EliminaProdottoInCarrello?idProdotto=<%= prodotto.getIdProdotto() %>">
                 <button type="button">Rimuovi</button>
             </a>
