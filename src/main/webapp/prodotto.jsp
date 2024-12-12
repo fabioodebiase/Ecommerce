@@ -7,52 +7,51 @@
 <html lang="it">
 <head>
     <title>Shop</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const plusButton = document.querySelector(".plus");
+            const minusButton = document.querySelector(".minus");
+            const quantitaInput = document.querySelector("#quantitaIn");
+            const maxQuantita = parseInt(document.querySelector("#quantitaMax").textContent.split(":")[1].trim(), 10);
+
+            // Incrementa la quantità
+            plusButton.addEventListener("click", function () {
+                let currentValue = parseInt(quantitaInput.value, 10) || 1;
+                if (currentValue < maxQuantita) {
+                    quantitaInput.value = currentValue + 1;
+                }
+            });
+
+            // Decrementa la quantità
+            minusButton.addEventListener("click", function () {
+                let currentValue = parseInt(quantitaInput.value, 10) || 1;
+                if (currentValue > 1) {
+                    quantitaInput.value = currentValue - 1;
+                }
+            });
+        });
+    </script>
 </head>
 <body>
 <%
 Utente user = (Utente) session.getAttribute("user");
 Prodotto prodotto = (Prodotto) request.getAttribute("prodotto");
 %>
-<form action = "Carrello" method = "POST">
-    <p><%=prodotto.getNomeProdotto()%></p>
-    <p>Prezzo: <%=prodotto.getPrezzo()%></p>
-    <p id = "quantitaDisp">Quantita' disponibili: <%=prodotto.getQuantitaDisponibile()%></p>
+<form action="Carrello" method="POST">
+    <p><%= prodotto.getNomeProdotto() %></p>
+    <p>Prezzo: <%= prodotto.getPrezzo() %></p>
+    <p id="quantitaMax">Quantità disponibili: <%= prodotto.getQuantitaDisponibile() %></p>
+    <input type="hidden" name="quantitaDisp" value="<%= prodotto.getQuantitaDisponibile() %>" id="quantitaDisp">
 
-    <label for="quantitaProdotto"> Quantita':</label>
-    <input type = "number" name = "quantitaProdotto" id = "quantitaProdotto" min = "1" required>
+    <label for="quantitaIn">Quantità:</label>
+    <button type="button" class="minus">-</button>
+    <input type="number" name="quantitaProdotto" id="quantitaIn" min="1" max="<%= prodotto.getQuantitaDisponibile() %>" value="1" required>
+    <button type="button" class="plus">+</button>
 
-    <img src="<%=request.getContextPath()%>/<%= prodotto.getImagePath()%>" width="200">
-    <p id="errorMsg" style="color: red; display: none;">Selezionare una quantita' valida!</p>
+    <img src="<%= request.getContextPath() %>/<%= prodotto.getImagePath() %>" width="200">
 
-    <!--input hidden per passare parametri alla servlet del carrello -->
-    <input type = "hidden" name = "idProdotto" value = "<%=prodotto.getIdProdotto()%>">
-    <input type = "submit" value = "Aggiungi al carrello" id = "submitForm">
+    <input type="hidden" name="idProdotto" value="<%= prodotto.getIdProdotto() %>">
+    <input type="submit" value="Aggiungi al carrello" id="submitForm">
 </form>
-<script>
-    // Ottieni riferimenti agli elementi HTML
-    const quantitaDisp = document.getElementById("quantitaDisp");
-    const quantitaSel = document.getElementById("quantitaProdotto");
-    const errorMsg = document.getElementById("errorMsg");
-    const submit = document.getElementById("submitForm");
-    // Estrai il numero massimo di quantità disponibili
-    const maxQuantita = parseInt(quantitaDisp.textContent.replace("Quantita' disponibili: ", ""), 10);
-
-    // Aggiungi un listener all'input per controllare il valore
-    quantitaSel.addEventListener("input", () => {
-        // Ottieni il valore selezionato dall'utente
-        const selectedValue = parseInt(quantitaSel.value, 10);
-
-        // Controlla se la quantità è valida
-        if (selectedValue > maxQuantita || selectedValue < 1 || isNaN(selectedValue)) {
-            // Mostra il messaggio di errore
-            errorMsg.style.display = "block";
-            submit.disabled = true
-        } else {
-            // Nascondi il messaggio di errore
-            errorMsg.style.display = "none";
-            submit.disabled = false;
-        }
-    });
-</script>
 </body>
 </html>

@@ -12,19 +12,8 @@ import java.io.IOException;
 public class OrdineServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        int idUtente = Integer.parseInt(req.getParameter("idUtente"));
-        int idProdotto = Integer.parseInt(req.getParameter("idProdotto"));
-        int quantita =  Integer.parseInt(req.getParameter("quantita"));
-
-        Ordine ordine = new Ordine();
-
-        ordine.setIdUtente(idUtente);
-        ordine.setIdProdotto(idProdotto);
-        ordine.setQuantita(quantita);
-
-
-
+        int quantita =  Integer.parseInt(req.getParameter("quantitaProdotto"));
+        double totale = Double.parseDouble(req.getParameter("totale"));
 
     }
 }
