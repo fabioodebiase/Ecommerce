@@ -5,6 +5,7 @@
 <html>
 <head>
     <title>Carrello</title>
+    <link rel="stylesheet" href="css/carrello.css">
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             let plus = document.querySelectorAll(".plus");
@@ -63,48 +64,60 @@
     </script>
 </head>
 <body>
-<%
-Utente utente = (Utente) session.getAttribute("user");
-int totale = 0;
-List<Prodotto> carrello = (List<Prodotto>) session.getAttribute("carrello");
-    %>
-    <form action="Ordine" method="POST">
-        <% if (carrello != null && !carrello.isEmpty()) { %>
-        <% for (int i = 0; i < carrello.size(); i++) {
-        Prodotto prodotto = carrello.get(i);
-        %>
-        <div>
-            <p>Prodotto: <%= prodotto.getNomeProdotto() %></p>
-            <p class="prezzo"> Prezzo: <%= prodotto.getPrezzo() %></p>
-            <img src="<%= request.getContextPath() %>/<%= prodotto.getImagePath() %>"
-                 alt="<%= prodotto.getNomeProdotto() %>" width="200">
+    <main>
+        <div class="title-cart">
+            <h1>Il tuo carrello</h1>
         </div>
-        <div>
-            <button type="button" class="plus">+</button>
-            <input type="number" name="quantitaProdotto" class="quantitaIn"
-                   min="1" max="<%= prodotto.getQuantitaDisponibile() %>" value="<%= prodotto.getQuantitaSel() %>" required>
-            <button type="button" class="minus">-</button>
+        <%
+        Utente utente = (Utente) session.getAttribute("user");
+        int totale = 0;
+        String emptyCart = "";
+        List<Prodotto> carrello = (List<Prodotto>) session.getAttribute("carrello");
+            %>
+            <div class="list-order">
+                <form action="Ordine" method="POST">
+                    <% if (carrello != null && !carrello.isEmpty()) { %>
+                    <% for (int i = 0; i < carrello.size(); i++) {
+                    Prodotto prodotto = carrello.get(i);
+                    %>
+                    <img src="<%= request.getContextPath() %>/<%= prodotto.getImagePath() %>"
+                         alt="<%= prodotto.getNomeProdotto() %>" width="200">
+                    <div class="products">
+                        <div class="product-info">
+                            <p class="product-name">Prodotto: <%= prodotto.getNomeProdotto() %></p>
+                            <p class="product-price"> Prezzo: <%= prodotto.getPrezzo() %></p>
+                        </div>
 
-
-            <input type="hidden" name="quantitaDisp" value="<%= prodotto.getQuantitaDisponibile() %>" class="quantitaMax">
-            <input type="hidden" name="idProdotto" value="<%= prodotto.getIdProdotto() %>">
-            <a href="EliminaProdottoInCarrello?idProdotto=<%= prodotto.getIdProdotto() %>">
-                <button type="button">Rimuovi</button>
-            </a>
-        </div>
-        <% } %>
-        <% } else { %>
-        <p>Il carrello e' vuoto.</p>
-        <% } %>
-        <p>Totale: <span id="totale" name="totale"><%= totale %></span></p>
-        <input type="hidden" name="totale" value="<%=totale%>">
-        <input type="submit" value="Procedi all'ordine" id="submitForm">
-    </form>
-
-    <% if (utente != null && utente.getUsername().equals("admin")) { %>
-    <a href="adminHome.jsp">Vai alla home</a>
-    <% } else { %>
-    <a href="home.jsp">Vai alla home</a>
-    <% } %>
+                    </div>
+                    <div>
+                        <button type="button" class="plus">+</button>
+                        <input type="number" name="quantitaProdotto" class="quantitaIn" min="1" max="<%= prodotto.getQuantitaDisponibile() %>" value="<%= prodotto.getQuantitaSel() %>" required>
+                        <button type="button" class="minus">-</button>
+            
+            
+                        <input type="hidden" name="quantitaDisp" value="<%= prodotto.getQuantitaDisponibile() %>" class="quantitaMax">
+                        <input type="hidden" name="idProdotto" value="<%= prodotto.getIdProdotto() %>">
+                        <a href="EliminaProdottoInCarrello?idProdotto=<%= prodotto.getIdProdotto() %>">
+                            <button type="button">Rimuovi</button>
+                        </a>
+                    </div>
+                </div>
+                    <% } %>
+                    <% } else {
+                        emptyCart = "Il carrello e' vuoto."; %>
+                    <p class="empty-cart"><%= emptyCart %></p>
+                    <% } %>
+                    <% if (carrello != null && !carrello.isEmpty()) { %>
+                    <p class="total">Totale: <span id="totale" name="totale"><%= totale %></span></p>
+                    <input type="hidden" name="totale" value="<%=totale%>">
+                    <input type="submit" value="Procedi all'ordine" id="submitForm" class="botton-order">
+                    <% } %>
+                </form>
+            <% if (utente != null && utente.getUsername().equals("admin")) { %>
+            <a href="adminHome.jsp">Vai alla home</a>
+            <% } else { %>
+            <a href="home.jsp" class="botton-home">Vai alla home</a>
+            <% } %>
+    </main>
 </body>
 </html>

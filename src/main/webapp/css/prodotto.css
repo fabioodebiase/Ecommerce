@@ -1,0 +1,33 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+  color: #333;
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  /*flex-direction: row;*/
+  align-items: center;
+  max-width: 800px;
+  height: 100%;
+  margin: 50px auto;
+  padding: 50px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  /* position: relative; */
+}
+
+.image {
+  width: 200px;
+  /* position: absolute;
+  left: 5px;
+  bottom: 100px; */
+  border-radius: 20px;
+  float: left;
+}
