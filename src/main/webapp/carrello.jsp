@@ -12,7 +12,7 @@
             let minus = document.querySelectorAll(".minus");
             let quantitaProdottoBox = document.querySelectorAll(".quantitaIn");
             let quantitaMax = document.querySelectorAll(".quantitaMax");
-            let prezzo = document.querySelectorAll(".prezzo");
+            let prezzo = document.querySelectorAll(".product-price");
             let totale = document.getElementById("totale");
 
             // Funzione per aggiornare il totale
@@ -22,6 +22,7 @@
                     let currentValue = parseInt(input.value, 10) || 0;
                     let prezzoUnitario = parseFloat(prezzo[index].textContent.split(":")[1]); // Estrae il prezzo
                     calcoloTotale += currentValue * prezzoUnitario;
+                    console.log(calcoloTotale)
                 });
                 totale.textContent = calcoloTotale.toFixed(2); // Mostra il totale con due decimali
 
@@ -72,13 +73,14 @@
         Utente utente = (Utente) session.getAttribute("user");
         int totale = 0;
         String emptyCart = "";
+        String errore = (String) request.getAttribute("errore");
         List<Prodotto> carrello = (List<Prodotto>) session.getAttribute("carrello");
-            %>
+
+        %>
             <div class="list-order">
                 <form action="Ordine" method="POST">
                     <% if (carrello != null && !carrello.isEmpty()) { %>
-                    <% for (int i = 0; i < carrello.size(); i++) {
-                    Prodotto prodotto = carrello.get(i);
+                    <% for (Prodotto prodotto : carrello) {
                     %>
                     <img src="<%= request.getContextPath() %>/<%= prodotto.getImagePath() %>"
                          alt="<%= prodotto.getNomeProdotto() %>" width="200">
@@ -91,10 +93,10 @@
                     </div>
                     <div>
                         <button type="button" class="plus">+</button>
-                        <input type="number" name="quantitaProdotto" class="quantitaIn" min="1" max="<%= prodotto.getQuantitaDisponibile() %>" value="<%= prodotto.getQuantitaSel() %>" required>
+                        <input type="number" name="quantitaSel_<%=prodotto.getIdProdotto()%>" class="quantitaIn" min="1" max="<%= prodotto.getQuantitaDisponibile() %>" value="<%= prodotto.getQuantitaSel() %>" required>
                         <button type="button" class="minus">-</button>
-            
-            
+
+
                         <input type="hidden" name="quantitaDisp" value="<%= prodotto.getQuantitaDisponibile() %>" class="quantitaMax">
                         <input type="hidden" name="idProdotto" value="<%= prodotto.getIdProdotto() %>">
                         <a href="EliminaProdottoInCarrello?idProdotto=<%= prodotto.getIdProdotto() %>">
@@ -113,6 +115,10 @@
                     <input type="submit" value="Procedi all'ordine" id="submitForm" class="botton-order">
                     <% } %>
                 </form>
+            <% if (errore != null){
+            %>
+            <p style = "color:red">Errore in ordine: <%=errore%></p>
+            <% } %>
             <% if (utente != null && utente.getUsername().equals("admin")) { %>
             <a href="adminHome.jsp">Vai alla home</a>
             <% } else { %>

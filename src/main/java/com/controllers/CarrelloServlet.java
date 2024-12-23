@@ -18,17 +18,15 @@ import java.util.List;
 public class CarrelloServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        HttpSession session = req.getSession();
         // Recupera il prodotto selezionato
         int idProdotto = Integer.parseInt(req.getParameter("idProdotto"));
         Prodotto prodottoCarrello = ProdottoDAO.getProdottoById(idProdotto);
         int quantitaSel = Integer.parseInt(req.getParameter("quantitaProdotto"));
         prodottoCarrello.setQuantitaSel(quantitaSel);
-        // Recupera l'utente corrente dalla sessione
-        HttpSession session = req.getSession();
         List <Prodotto> carrello = (List<Prodotto>) session.getAttribute("carrello");
         if (carrello == null) {
-            // Crea un nuovo carrello se non esiste o appartiene a un altro utente
+            // Crea un nuovo carrello se non esiste
             carrello = new ArrayList<>();
             session.setAttribute("carrello", carrello);
         }

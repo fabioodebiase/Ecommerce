@@ -27,7 +27,6 @@ List<Prodotto> listaProdotti = ProdottoDAO.getAllProdotti();
     <h1>Benvenuto, <%= username %></h1>
     <div class="action-buttons">
       <a href="ordini.jsp" class="btn">Ordini</a>
-      <a href="carrello.jsp" class="btn">Carrello</a>
       <a href="Logout" class="btn">Logout</a>
     </div>
   </header>
@@ -43,14 +42,22 @@ List<Prodotto> listaProdotti = ProdottoDAO.getAllProdotti();
       for (Prodotto prodotto : listaProdotti) {
       %>
       <div class="product-item">
-        <a href="Prodotto?id=<%= prodotto.getIdProdotto() %>" class="product-link">
-          <img src="<%= request.getContextPath() %>/<%= prodotto.getImagePath() %>" alt="<%= prodotto.getNomeProdotto() %>" class="product-image">
-          <p class="product-name"><%= prodotto.getNomeProdotto() %></p>
-        </a>
+        <% if (prodotto.getQuantitaDisponibile() == 0) { %>
+        <img src="<%= request.getContextPath() %>/<%= prodotto.getImagePath() %>" alt="<%= prodotto.getNomeProdotto() %>" class="product-image" style="width:200px">
+        <p class="product-name"><%= prodotto.getNomeProdotto() %></p>
         <div class="product-controls">
           <a href="modificaProdotto?idProdotto=<%= prodotto.getIdProdotto() %>" class="btn btn-edit">Modifica</a>
           <a href="eliminaProdotto?idProdotto=<%= prodotto.getIdProdotto() %>" class="btn btn-delete">Elimina</a>
         </div>
+        <p style="color:red">Prodotto Sold Out!</p>
+        <% } else { %>
+        <img src="<%= request.getContextPath() %>/<%= prodotto.getImagePath() %>" alt="<%= prodotto.getNomeProdotto() %>" class="product-image" style="width:200px">
+        <p class="product-name"><%= prodotto.getNomeProdotto() %></p>
+        <div class="product-controls">
+          <a href="modificaProdotto?idProdotto=<%= prodotto.getIdProdotto() %>" class="btn btn-edit">Modifica</a>
+          <a href="eliminaProdotto?idProdotto=<%= prodotto.getIdProdotto() %>" class="btn btn-delete">Elimina</a>
+        </div>
+        <% } %>
       </div>
       <%
       }

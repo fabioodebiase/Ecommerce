@@ -89,6 +89,20 @@ public class ProdottoDAO {
 		}
 	}
 
+	public static void updateQuantitaProdotto(int quantitaCalcolata, int idProdotto){
+		String sql = "UPDATE Prodotti SET quantita_disponibile = ? WHERE id = ?";
+		try (Connection conn = connessione.connessioneDB()){
+			if (connessione != null){
+				PreparedStatement preparedStatement = conn.prepareStatement(sql);
+				preparedStatement.setInt(1,quantitaCalcolata);
+				preparedStatement.setInt(2,idProdotto);
+				preparedStatement.executeUpdate();
+			}
+		}catch(SQLException e){
+			throw new RuntimeException(e);
+		}
+	}
+
 	public static String getFilePath(int id) {
 		String sql = "SELECT image_path FROM Prodotti WHERE id = ?";
 		String filePath = null;
