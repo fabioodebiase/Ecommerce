@@ -6,6 +6,43 @@ public class Ordine {
 	private int idUtente;
 	private int idProdotto;
 	private double totaleOrdine;
+	private String username;
+	private String nomeProdotto;
+	private String imagePath;
+	private double prezzo;
+
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getNomeProdotto() {
+		return nomeProdotto;
+	}
+
+	public void setNomeProdotto(String nomeProdotto) {
+		this.nomeProdotto = nomeProdotto;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
+	public double getPrezzo() {
+		return prezzo;
+	}
+
+	public void setPrezzo(double prezzo) {
+		this.prezzo = prezzo;
+	}
 
 	public Ordine() {
 
@@ -50,4 +87,7 @@ public class Ordine {
 	public void setTotaleOrdine(double totaleOrdine) {
 		this.totaleOrdine = totaleOrdine;
 	}
+
 }
+
+

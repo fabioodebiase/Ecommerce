@@ -26,7 +26,7 @@ List<Prodotto> listaProdotti = ProdottoDAO.getAllProdotti();
   <header class="admin-header">
     <h1>Benvenuto, <%= username %></h1>
     <div class="action-buttons">
-      <a href="ordini.jsp" class="btn">Ordini</a>
+      <a href="ordiniAdmin.jsp" class="btn">Ordini</a>
       <a href="Logout" class="btn">Logout</a>
     </div>
   </header>
