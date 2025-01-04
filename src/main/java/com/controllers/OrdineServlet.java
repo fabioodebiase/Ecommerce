@@ -47,12 +47,17 @@ public class OrdineServlet extends HttpServlet {
                 int quantitaSel = Integer.parseInt(req.getParameter("quantitaSel_" + p.getIdProdotto()));
                 newOrdine.setQuantita(quantitaSel);
                 newOrdine.setIdProdotto(p.getIdProdotto());
+                newOrdine.setNomeProdotto(p.getNomeProdotto());
+                newOrdine.setPrezzo(p.getPrezzo());
+                newOrdine.setImagePath(p.getImagePath());
+
                 //aggiungo i prodotti nella tabella dettaglio_prodotti
-                OrdineDAO.aggiungiDettagliOrdine(newOrdine.getIdOrdine(),newOrdine.getIdProdotto(),newOrdine.getQuantita());
+                OrdineDAO.aggiungiDettagliOrdine(newOrdine);
                 //aggiorno la quantità disponibile
                 int quantitaCalcolata = p.getQuantitaDisponibile() - quantitaSel;
                 ProdottoDAO.updateQuantitaProdotto(quantitaCalcolata, p.getIdProdotto());
             }
+            OrdineDAO.aggiungiStoricoOrdini();
             session.setAttribute("carrello" , null);
             req.getRequestDispatcher("confirmOrdine.jsp").forward(req,resp);
         }catch(Exception e){

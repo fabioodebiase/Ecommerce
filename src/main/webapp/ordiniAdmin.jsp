@@ -10,15 +10,15 @@
 <main>
     <div class="title-ordini">
         <h1>Lista Ordini</h1>
-        <link rel="stylesheet" href="ordiniAdmin.css">
+        <link rel="stylesheet" href="ordini.css">
     </div>
     <%
-    ArrayList<Ordine> ordini = OrdineDAO.getAllOrdini();
+    ArrayList<Ordine> ordini = OrdineDAO.getStoricoOrdini();
     ArrayList<Ordine> dettagliOrdini = null;
         %>
         <div class = "container">
             <% for (Ordine ordine : ordini) {
-            dettagliOrdini = OrdineDAO.getDettagliOrdineById(ordine.getIdOrdine()); %>
+            dettagliOrdini = OrdineDAO.getDettagliStoricoOrdineByIdOrdine(ordine.getIdOrdine()); %>
             <div class = "container-ordini">
                 <div class = "head-prodotti">
                     <span>Id Ordine: <%= ordine.getIdOrdine() %></span>
@@ -35,10 +35,7 @@
                         <span class = "prezzo">Prezzo:<%=ordineDettagli.getPrezzo()%></span>
                         <span class = "quantita">Quantita' selezionata: <%=ordineDettagli.getQuantita()%></span>
                     </div>
-
                 </div>
-
-
                 <% } %>
             </div>
                 <% } %>

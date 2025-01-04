@@ -45,14 +45,17 @@ public class OrdineDAO {
 		return ordine.getIdOrdine();
 	}
 
-	public static void aggiungiDettagliOrdine(int idOrdine, int idProdotto, int quantita) {
-		String sql = "INSERT INTO dettagli_ordine (id_ordine, id_prodotto, quantita) VALUES (?,?,?)";
+	public static void aggiungiDettagliOrdine(Ordine newOrdine) {
+		String sql = "INSERT INTO dettagli_ordine (id_ordine, id_prodotto, quantita,nome_prodotto,prezzo,image_path) VALUES (?,?,?,?,?,?)";
 		try (Connection conn = connessione.connessioneDB()) {
 			if (conn != null) {
 				PreparedStatement preparedStatement = conn.prepareStatement(sql);
-				preparedStatement.setInt(1, idOrdine);
-				preparedStatement.setInt(2, idProdotto);
-				preparedStatement.setInt(3, quantita);
+				preparedStatement.setInt(1, newOrdine.getIdOrdine());
+				preparedStatement.setInt(2, newOrdine.getIdProdotto());
+				preparedStatement.setInt(3, newOrdine.getQuantita());
+				preparedStatement.setString(4, newOrdine.getNomeProdotto());
+				preparedStatement.setDouble(5,newOrdine.getPrezzo());
+				preparedStatement.setString(6,newOrdine.getImagePath());
 				preparedStatement.executeUpdate();
 			}
 		} catch (SQLException e) {
@@ -60,9 +63,26 @@ public class OrdineDAO {
 		}
 	}
 
-	public static ArrayList<Ordine> getAllOrdini() {
+	public static void aggiungiStoricoOrdini() {
+		String sql = "INSERT INTO storico_ordini (id_ordine, username, nome_prodotto, prezzo, quantita, image_path, id_utente, totale) " +
+				"SELECT ordine.id, utenti.username, dettagli_ordine.nome_prodotto, dettagli_ordine.prezzo, dettagli_ordine.quantita, dettagli_ordine.image_path, utenti.id, ordine.totale_ordine " +
+				"FROM utenti " +
+				"INNER JOIN ordine ON utenti.id = ordine.id_utente " +
+				"INNER JOIN dettagli_ordine ON ordine.id = dettagli_ordine.id_ordine";
+		try (Connection conn = connessione.connessioneDB();
+			 PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+			if (conn != null) {
+				preparedStatement.executeUpdate();
+			}
+		} catch (SQLException e) {
+			System.out.println(e);
+			throw new RuntimeException("Errore durante l'inserimento di tutti gli ordini nello storico", e);
+		}
+	}
+
+	public static ArrayList<Ordine> getStoricoOrdini() {
 		ArrayList<Ordine> ordini = new ArrayList<>();
-		String sql = "SELECT ordine.id, utenti.username, ordine.totale_ordine FROM ordine INNER JOIN utenti ON utenti.id = ordine.id_utente";
+		String sql = "SELECT DISTINCT id_ordine, username, totale FROM storico_ordini ORDER BY id_ordine;";
 		try (Connection conn = connessione.connessioneDB()) {
 			if (conn != null) {
 				PreparedStatement preparedStatement = conn.prepareStatement(sql);
@@ -70,9 +90,9 @@ public class OrdineDAO {
 				ResultSet rs = preparedStatement.executeQuery();
 				while (rs.next()) {
 					Ordine ordine = new Ordine();
-					ordine.setIdOrdine(rs.getInt("ordine.id"));
-					ordine.setUsername(rs.getString("utenti.username"));
-					ordine.setTotaleOrdine(rs.getInt("ordine.totale_ordine"));
+					ordine.setIdOrdine(rs.getInt("id_ordine"));
+					ordine.setUsername(rs.getString("username"));
+					ordine.setTotaleOrdine(rs.getInt("totale"));
 					ordini.add(ordine);
 				}
 			}
@@ -82,15 +102,9 @@ public class OrdineDAO {
 		return ordini;
 	}
 
-	public static ArrayList<Ordine> getDettagliOrdineById(int idOrdine) {
+	public static ArrayList<Ordine> getDettagliStoricoOrdineByIdOrdine(int idOrdine) {
 		ArrayList<Ordine> ordini = new ArrayList<>();
-		String sql = "SELECT prodotti.nome_prodotto AS nome_prodotto, prodotti.image_path AS image_path, " +
-				"prodotti.prezzo AS prezzo, dettagli_ordine.quantita AS quantita, ordine.id AS id_ordine " +
-				"FROM utenti " +
-				"INNER JOIN ordine ON utenti.id = ordine.id_utente " +
-				"INNER JOIN dettagli_ordine ON ordine.id = dettagli_ordine.id_ordine " +
-				"INNER JOIN prodotti ON dettagli_ordine.id_prodotto = prodotti.id " +
-				"WHERE ordine.id = ?";
+		String sql = "SELECT id_ordine, nome_prodotto, prezzo, quantita, image_path FROM storico_ordini WHERE id_ordine = ?";
 		try (Connection conn = connessione.connessioneDB()) {
 			if (conn != null) {
 				PreparedStatement preparedStatement = conn.prepareStatement(sql);
@@ -98,11 +112,12 @@ public class OrdineDAO {
 				ResultSet rs = preparedStatement.executeQuery();
 				while (rs.next()) {
 					Ordine ordine = new Ordine();
+					ordine.setIdOrdine(rs.getInt("id_ordine"));
 					ordine.setNomeProdotto(rs.getString("nome_prodotto"));
-					ordine.setImagePath(rs.getString("image_path"));
 					ordine.setPrezzo(rs.getDouble("prezzo"));
 					ordine.setQuantita(rs.getInt("quantita"));
-					ordine.setIdOrdine(rs.getInt("id_ordine"));
+					ordine.setImagePath(rs.getString("image_path"));
+
 					ordini.add(ordine);
 				}
 			}
@@ -111,4 +126,54 @@ public class OrdineDAO {
 		}
 		return ordini;
 	}
+
+	public static ArrayList<Ordine> getStoricoOrdiniByIdUtente(int idUtente) {
+		ArrayList<Ordine> ordini = new ArrayList<>();
+		String sql = "SELECT DISTINCT id_ordine, totale FROM storico_ordini WHERE id_utente = ? ORDER BY id_ordine;";
+		try (Connection conn = connessione.connessioneDB()) {
+			if (conn != null) {
+				PreparedStatement preparedStatement = conn.prepareStatement(sql);
+				preparedStatement.setInt(1,idUtente);
+				ResultSet rs = preparedStatement.executeQuery();
+				while (rs.next()) {
+					Ordine ordine = new Ordine();
+					ordine.setIdOrdine(rs.getInt("id_ordine"));
+					ordine.setTotaleOrdine(rs.getInt("totale"));
+					ordini.add(ordine);
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return ordini;
+	}
+
+	public static ArrayList<Ordine> getDettagliStoricoOrdineByIdOrdineAndIdUtente(int idOrdine,int idUtente) {
+		ArrayList<Ordine> ordini = new ArrayList<>();
+		String sql = "SELECT id_ordine, nome_prodotto, prezzo, quantita, image_path FROM storico_ordini WHERE id_ordine = ? AND id_utente = ?";
+		try (Connection conn = connessione.connessioneDB()) {
+			if (conn != null) {
+				PreparedStatement preparedStatement = conn.prepareStatement(sql);
+				preparedStatement.setInt(1, idOrdine);
+				preparedStatement.setInt(2, idUtente);
+				ResultSet rs = preparedStatement.executeQuery();
+				while (rs.next()) {
+					Ordine ordine = new Ordine();
+					ordine.setIdOrdine(rs.getInt("id_ordine"));
+					ordine.setNomeProdotto(rs.getString("nome_prodotto"));
+					ordine.setPrezzo(rs.getDouble("prezzo"));
+					ordine.setQuantita(rs.getInt("quantita"));
+					ordine.setImagePath(rs.getString("image_path"));
+
+					ordini.add(ordine);
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return ordini;
+	}
+
 }
+
+
