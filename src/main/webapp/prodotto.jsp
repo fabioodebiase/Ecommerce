@@ -7,7 +7,7 @@
 <html lang="it">
 <head>
     <title>Shop</title>
-    <link rel="stylesheet" href="css/prodotto.css">
+    <link rel="stylesheet" href="prodotto.css">
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const plusButton = document.querySelector(".plus");
@@ -54,11 +54,13 @@ Prodotto prodotto = (Prodotto) request.getAttribute("prodotto");
             <input type="hidden" name="quantitaDisp" value="<%= prodotto.getQuantitaDisponibile() %>" id="quantitaDisp">
             <p id="quantitaMax">Quantita' disponibili: <%= prodotto.getQuantitaDisponibile() %></p>
         </div>
+        <div class = "container-quantitaIn">
+            <label for="quantitaIn">Quantita':</label>
+            <button type="button" class="minus">-</button>
+            <input type="number" name="quantitaProdotto" id="quantitaIn" min="1" max="<%= prodotto.getQuantitaDisponibile() %>" value="1" required>
+            <button type="button" class="plus">+</button>
+        </div>
 
-        <label for="quantitaIn">Quantita':</label>
-        <button type="button" class="minus">-</button>
-        <input type="number" name="quantitaProdotto" id="quantitaIn" min="1" max="<%= prodotto.getQuantitaDisponibile() %>" value="1" required>
-        <button type="button" class="plus">+</button>
 
         <input type="hidden" name="idProdotto" value="<%= prodotto.getIdProdotto() %>">
         <input type="submit" value="Aggiungi al carrello" id="submitForm">
