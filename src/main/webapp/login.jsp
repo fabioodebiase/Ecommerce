@@ -2,25 +2,36 @@
 <html lang="it">
 <head>
     <title>Login</title>
-    <link rel="stylesheet" href="./css/login.css">
+    <link rel="stylesheet" href="login.css">
 </head>
 <body>
-<main>
-    <h1>Login</h1>
-    <div class="container">
+<div class = "container">
+    <span class = "title">Accedi</span>
         <form action = "Login" method = "POST">
-            <label for = "email"> Email</label>
-            <input type = "email" name = "email" id = "email">
-            <label for = "password"> Password</label>
-            <input type = "password" name = "password" id = "password">
-            <input type = "submit" value = "Accedi">
-        </form>
+            <div class="container-login">
+                <div class = "container-input">
+                    <span class = "title-input"><label for = "email"> Email</label></span>
+                    <input type = "email" class = "input" name = "email" id = "email">
+                </div>
+            <div class = "container-input">
+                <span class = "title-input"><label for = "password"> Password</label></span>
+                <input type = "password" class = "input" name = "password" id = "password">
+
+            </div>
+                <div class = "submit-container">
+                    <input type = "submit" class = "submit" value = "Accedi">
+                </div>
+                <span>Non sei ancora registrato?
+                    <a href="signUp.jsp">Clicca qui per registrarti</a>
+                </span>
+            </div>
         <%
         if (request.getAttribute("errore") != null) { %>
-        <p style="color:red"> <%= request.getAttribute("errore") %> </p>
+        <span class = "error" > <%= request.getAttribute("errore") %> </span>
         <% } %>
-        <p>Non sei ancora registrato?<a href="signUp.jsp">Clicca qui per registrarti</a></p>
-    </div>
-</main>
+        </form>
+
+
+</div>
 </body>
 </html>
