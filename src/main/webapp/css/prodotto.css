@@ -1,24 +1,122 @@
-
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f5f5f5;
+  background-color: #f9f9f9;
   color: #333;
-  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
 .container {
-  display: flex;
-  align-items: center;
-  border: 2px solid blue;
+  display:flex;
+  justify-content:center;
+  background-color: #fff;
+  padding: 150px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
 }
 
-.image-container{
+.image-container, .title-container, .price-container, .quantity-container {
     display:flex;
-
+    justify-content:center;
+    padding:10px;
 }
 
-.image-container {
-  border-radius: 20px;
+.image-container img {
+  border-radius: 10px;
+  width:200px;
 }
+
+
+.title-container .title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+
+
+
+.price-container span,
+.quantity-container span {
+  font-size: 1.1rem;
+  color: #555;
+  text-align: center;
+}
+
+
+button.minus,
+button.plus {
+  background:none;
+  color: black;
+  border: none;
+  padding: 5px 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.container-inputQuantity{
+    display:flex;
+    justify-content:center;
+    padding:10px;
+    align-items:center;
+    gap:10px;
+}
+
+.container-inputQuantity label{
+    font-size: 1.2rem;
+}
+
+
+.container-quantitaIn{
+    border: 2px solid #FFD814;
+    border-radius:25px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+#quantitaIn {
+  text-align: center;
+  padding: 5px;
+  border:none;
+  outline: none;
+  font-size: 1rem;
+}
+
+#quantitaIn::-webkit-inner-spin-button,
+#quantitaIn::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#submitForm {
+
+  padding: 10px 20px;
+  background-color: #FFD814;
+  color: black;
+  border: none;
+  font-size: 1rem;
+  font-weight:bold;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+#submitForm:hover {
+  background-color: #218838;
+}
+
+.details-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+
+
+
+

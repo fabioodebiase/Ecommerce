@@ -7,7 +7,7 @@
 <html lang="it">
 <head>
     <title>Shop</title>
-    <link rel="stylesheet" href="prodotto.css">
+    <link rel="stylesheet" href="css/prodotto.css">
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const plusButton = document.querySelector(".plus");
@@ -38,32 +38,36 @@
 Utente user = (Utente) session.getAttribute("user");
 Prodotto prodotto = (Prodotto) request.getAttribute("prodotto");
 %>
-<main class="container">
-
+<div class="container">
     <form action="Carrello" method="POST">
+
         <div class = "image-container">
-            <img style = "width: 200px" src="<%=request.getContextPath()%>/<%= prodotto.getImagePath()%>">
+            <img src="<%=request.getContextPath()%>/<%= prodotto.getImagePath()%>">
         </div>
-        <div class = "name-container">
-            <p><span class = "title"><%= prodotto.getNomeProdotto() %></span></p>
+        <div class = "title-container">
+            <span class = "title"><%= prodotto.getNomeProdotto() %></span>
         </div>
         <div class = "price-container">
-            <p>Prezzo: <%= prodotto.getPrezzo() %></p>
+            <span class = "price">Prezzo: <%= prodotto.getPrezzo() %></span>
         </div>
         <div class = "quantity-container">
             <input type="hidden" name="quantitaDisp" value="<%= prodotto.getQuantitaDisponibile() %>" id="quantitaDisp">
-            <p id="quantitaMax">Quantita' disponibili: <%= prodotto.getQuantitaDisponibile() %></p>
+            <span id="quantitaMax">Quantita' disponibili: <%= prodotto.getQuantitaDisponibile() %></span>
         </div>
-        <div class = "container-quantitaIn">
-            <label for="quantitaIn">Quantita':</label>
-            <button type="button" class="minus">-</button>
-            <input type="number" name="quantitaProdotto" id="quantitaIn" min="1" max="<%= prodotto.getQuantitaDisponibile() %>" value="1" required>
-            <button type="button" class="plus">+</button>
+        <div class = "container-inputQuantity">
+            <label for = "quantitaIn">Quantita':</label>
+            <div class = "container-quantitaIn">
+                <button type="button" class="minus">-</button>
+                <input type="number" name="quantitaProdotto" id="quantitaIn" min="1" max="<%= prodotto.getQuantitaDisponibile() %>" value="1" required readonly>
+                <button type="button" class="plus">+</button>
+
+            </div>
+            <input type="submit" value="Aggiungi al carrello" id="submitForm">
         </div>
-
-
         <input type="hidden" name="idProdotto" value="<%= prodotto.getIdProdotto() %>">
-        <input type="submit" value="Aggiungi al carrello" id="submitForm">
+
+
     </form>
+</div>
 </body>
 </html>
