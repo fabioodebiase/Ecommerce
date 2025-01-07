@@ -1,0 +1,42 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+  color: #333;
+
+}
+
+main {
+display:flex;
+  justify-content:center;
+  width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.container{
+    padding:100px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:25px;
+    align-items:center;
+}
+
+.confirm{
+    font-size:1.5rem;
+    font-weight:bold;
+}
+
+.button-home {
+  padding: 10px 20px;
+  background-color: #eeb230;
+  color: #000000;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

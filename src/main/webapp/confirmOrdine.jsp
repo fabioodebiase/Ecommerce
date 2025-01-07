@@ -4,12 +4,17 @@
 
 <html>
 <head>
-    <title>Ordine</title>
+    <link rel="stylesheet" href="css/confirmOrdine.css">
+    <title>Ordine Effettuato</title>
 </head>
 <body>
+<main>
+    <div class = "container">
+        <span class = "confirm">Ordine effettuato con sucesso!</span>
+        <a href="home.jsp" class="button-home">Vai alla home</a>
+    </div>
 
-<h1>Ordine effettuato con sucesso!</h1>
-<p> <a href = "home.jsp">Torna alla home</a></p>
+</main>
 
 </body>
 </html>
