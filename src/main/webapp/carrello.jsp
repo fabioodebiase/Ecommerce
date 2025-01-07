@@ -113,22 +113,23 @@
                     <% } else {
                         emptyCart = "Il carrello e' vuoto."; %>
                     <p class="empty-cart"><%= emptyCart %></p>
+                    <a href="home.jsp" class="button-home">Vai alla home</a>
                     <% } %>
                     <% if (carrello != null && !carrello.isEmpty()) { %>
                     <p class="total">Totale: <span id="totale" name="totale"><%= totale %></span></p>
                     <input type="hidden" name="totale" value="<%=totale%>">
-                    <input type="submit" value="Procedi all'ordine" id="submitForm" class="botton-order">
+                    <div class = "button-container">
+                        <a href="home.jsp" class="button-home">Vai alla home</a>
+                        <input type="submit" value="Procedi all'ordine" id="submitForm" class="button-order">
+                    </div>
+
                     <% } %>
                 </form>
             <% if (errore != null){
             %>
             <p style = "color:red">Errore in ordine: <%=errore%></p>
             <% } %>
-            <% if (utente != null && utente.getUsername().equals("admin")) { %>
-            <a href="adminHome.jsp">Vai alla home</a>
-            <% } else { %>
-            <a href="home.jsp" class="botton-home">Vai alla home</a>
-            <% } %>
+
     </main>
 </body>
 </html>
