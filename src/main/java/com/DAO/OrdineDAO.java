@@ -104,7 +104,7 @@ public class OrdineDAO {
 
 	public static ArrayList<Ordine> getDettagliStoricoOrdineByIdOrdine(int idOrdine) {
 		ArrayList<Ordine> ordini = new ArrayList<>();
-		String sql = "SELECT id_ordine, nome_prodotto, prezzo, quantita, image_path FROM storico_ordini WHERE id_ordine = ?";
+		String sql = "SELECT DISTINCT id_ordine, nome_prodotto, prezzo, quantita, image_path FROM storico_ordini WHERE id_ordine = ?";
 		try (Connection conn = connessione.connessioneDB()) {
 			if (conn != null) {
 				PreparedStatement preparedStatement = conn.prepareStatement(sql);
@@ -150,7 +150,7 @@ public class OrdineDAO {
 
 	public static ArrayList<Ordine> getDettagliStoricoOrdineByIdOrdineAndIdUtente(int idOrdine,int idUtente) {
 		ArrayList<Ordine> ordini = new ArrayList<>();
-		String sql = "SELECT id_ordine, nome_prodotto, prezzo, quantita, image_path FROM storico_ordini WHERE id_ordine = ? AND id_utente = ?";
+		String sql = "SELECT DISTINCT id_ordine, nome_prodotto, prezzo, quantita, image_path FROM storico_ordini WHERE id_ordine = ? AND id_utente = ?";
 		try (Connection conn = connessione.connessioneDB()) {
 			if (conn != null) {
 				PreparedStatement preparedStatement = conn.prepareStatement(sql);
